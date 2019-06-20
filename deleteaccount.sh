@@ -11,7 +11,7 @@ if [[ "$currentuser" == "localadmin" ]]; then
 	echo "We're in localadmin, something must've gone wrong, proceeding"
 else
 	echo "The user logged in is not the localadmin, we don't need to do anything"
-	exit 1
+	exit 0
 fi
 
 Dansarray=( $UserList )
