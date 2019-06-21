@@ -5,7 +5,7 @@
 #Accounts are case sensitive
 
 currentuser=$(stat -f "%Su" /dev/console)
-UserList=`ls /Users | grep -v "Shared" | grep -v -i "localadmin" | grep -v -i "$CurrentUser" | grep -v -i "Guest" | grep -v -i "arduser"`
+UserList=`ls /Users | grep -v "Shared" | grep -v -i "localadmin" | grep -v -i "$currentuser" | grep -v -i "Guest" | grep -v -i "arduser" | grep -v -i ".localized"`
 
 if [[ "$currentuser" == "localadmin" ]]; then
 	echo "We're in localadmin, something must've gone wrong, proceeding"
