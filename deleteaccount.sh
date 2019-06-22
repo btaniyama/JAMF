@@ -23,7 +23,7 @@ if [ ${#Dansarray[@]} -eq 0 ];
         exit 0
     else
         for u in ${Dansarray[@]} ; do
-        	button=$(/usr/bin/osascript -e 'display dialog "Delete user folder '$u'?" buttons {"No", "Yes"}')
+        	button=$(/bin/launchctl asuser $currentuser osascript -e 'display dialog "Delete user folder '$u'?" buttons {"No", "Yes"}')
         	if [ "$button" == "button returned:No" ]; then
         		echo "No button pressed, skipping account deletion"
         		exit 0
@@ -31,9 +31,6 @@ if [ ${#Dansarray[@]} -eq 0 ];
         		echo "Yes button pressed, moving forward"
         	fi
             echo "$u -- Deleting..."
-            `/usr/bin/dscl . delete /Users/$u && /bin/rm -rf /Users/$u`
+            `/usr/sbin/sysadminctl -deleteUser $u -keepHome && /bin/rm -rf /Users/$u`
         done
-        #Remove sharepoints and groups
-        find /private/var/db/dslocal/nodes/Default/sharepoints -name "*" -type f -delete
-        find /private/var/db/dslocal/nodes/Default/groups -name "com.apple.sharepoint*" -type f -delete
 fi
