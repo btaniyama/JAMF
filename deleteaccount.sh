@@ -23,7 +23,7 @@ if [ ${#Dansarray[@]} -eq 0 ];
         exit 0
     else
         for u in ${Dansarray[@]} ; do
-        	button=$(osascript -e 'tell app "System Events" to display dialog "Delete user folder '$u'?" buttons {"No", "Yes"}')
+        	button=$(/usr/bin/osascript -e 'display dialog "Delete user folder '$u'?" buttons {"No", "Yes"}')
         	if [ "$button" == "button returned:No" ]; then
         		echo "No button pressed, skipping account deletion"
         		exit 0
