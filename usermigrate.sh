@@ -4,7 +4,6 @@
 
 #Gather our usernames
 currentuser=$(stat -f "%Su" /dev/console)
-currentUID=$(id -u $currentuser)
 olduser=$(osascript -e 'set T to text returned of (display dialog "Enter the CURRENT short username of the user we are trying to change" with icon caution buttons {"Cancel","OK"} default button "OK" default answer "")')
 newuser=$(osascript -e 'set T to text returned of (display dialog "Enter the AD username of the user we are trying to change" with icon caution buttons {"Cancel","OK"} default button "OK" default answer "")')
 button=$(osascript -e 'display dialog "Confirm that we are going to rename the user account '$olduser' to '$newuser?'" buttons {"No","Yes"} default button "Yes"')
