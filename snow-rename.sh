@@ -6,37 +6,33 @@
 
 #Get Serial
 serial=$(system_profiler SPHardwareDataType | awk '/Serial/ {print $4}')
-#Define SNow User/Pass safely in JAMF
-API_USER="$4"
-API_PASS="$5"
+#Define SNow Username safely in JAMF
+SN_U=$4
+#Define SNow PW safely in JAMF
+SN_P=$5
 #Define Regular Expression for Asset Tag Number
 re='^[0-9]+$'
 #Create cURL URL
-curl_url="https://xxxxxxx.service-now.com/api/now/table/alm_hardware?sysparm_query=serial_number%3D${serial}&sysparm_fields=serial_number%2Casset_tag&sysparm_limit=1"
-
-echo $curl_url
+curl_url="https://unitedtalent.service-now.com/api/now/table/alm_hardware?sysparm_query=serial_number%3D${serial}&sysparm_fields=serial_number%2Casset_tag&sysparm_limit=1"
 
 #END VARIABLES#
 
 #API Call to SNow to get the Asset Tag
-asset_num=$(
+asset=$(
 curl "$curl_url" \
 --request GET \
 --header "Accept:application/json" \
---user "$API_USER:$API_PASS"
+--user '$SN_U':'$SN_P' | sed -e 's/.*asset_tag":"//'  -e 's/".*//'
 )
 
-echo $asset_num
-
-asset=$(sed -e 's/.*asset_tag":"//'  -e 's/".*//' <<< $asset_num)
+#If we receive anything other than a number rename to Serial Number then exit as failed
+if ! [[ $asset =~ $re ]] ; then
+   /usr/local/bin/jamf setComputerName -name $serial 
+   echo "error: Asset tag is either not a number or blank, this computer has been named $serial" >&2; exit 1
+fi
 
 #Confirm the asset tag
 echo  "ServiceNow reports the asset tag is $asset"
-
-#If we receive anything other than a number, exit
-if ! [[ $asset =~ $re ]] ; then
-   echo "error: Asset tag is either not a number or blank" >&2; exit 1
-fi
 
 #Get new Comp name
 comp_name="MAC-$asset"
@@ -52,7 +48,7 @@ echo Computer will be named $comp_name
 /usr/local/bin/jamf setComputerName -name $comp_name
 /usr/local/bin/jamf recon
 #wait 15 seconds and recon again since the name change never takes on the first recon for some reason
-sleep 15
+wait 15
 /usr/local/bin/jamf recon
 
 exit 0
