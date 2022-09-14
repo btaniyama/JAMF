@@ -12,7 +12,7 @@ API_PASS="$5"
 #Define Regular Expression for Asset Tag Number
 re='^[0-9]+$'
 #Create cURL URL
-curl_url="https://unitedtalent.service-now.com/api/now/table/alm_hardware?sysparm_query=serial_number%3D${serial}&sysparm_fields=serial_number%2Casset_tag&sysparm_limit=1"
+curl_url="https://xxxxxxx.service-now.com/api/now/table/alm_hardware?sysparm_query=serial_number%3D${serial}&sysparm_fields=serial_number%2Casset_tag&sysparm_limit=1"
 
 echo $curl_url
 
