@@ -67,7 +67,6 @@ echo "clean-out the Dock"
 # Full path to Applications to add to the Dock
 apps=(
 "/System/Applications/System Settings.app"
-
 "/Applications/Self-Service.app"
 "/Applications/OneDrive.app"
 "/Applications/Microsoft Teams.app"
