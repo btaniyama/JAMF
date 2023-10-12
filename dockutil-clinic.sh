@@ -69,13 +69,6 @@ apps=(
 "/System/Applications/System Settings.app"
 "/Applications/Self-Service.app"
 "/Applications/Sonos.app"
-"/Applications/OneDrive.app"
-"/Applications/Microsoft Teams.app"
-"/Applications/Microsoft Word.app"
-"/Applications/Microsoft Powerpoint.app"
-"/Applications/Microsoft Excel.app"
-"/Applications/Microsoft OneNote.app"
-"/Applications/Microsoft Outlook.app"
 "/Applications/Microsoft Edge.app"
 "/System/Applications/Launchpad.app"
 )
